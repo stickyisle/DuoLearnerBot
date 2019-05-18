@@ -13,13 +13,15 @@ async def on_ready():
 async def on_message(message):
 	if (message.content.startswith("||checkroles") and message.channel.id == 211715067329249280):
 		await message.channel.send("Checking for users without Learner role...")
+		i=0
 		for member in message.guild.members:
 			if (discord.utils.find(lambda r: r.name == "Learners", message.guild.roles) not in member.roles):
 				try:
 					await member.add_roles(discord.utils.find(lambda r: r.name == "Learners", message.guild.roles))
+					i += 1
 				except discord.Forbidden:
 					await message.channel.send(":x: I need the **Manage Roles** permission to work correctly.")
 					return
-		await message.channel.send(":white_check_mark: All users now have the Learner role!")
+		await message.channel.send(":white_check_mark: All users now have the Learner role! (%d added.)" % i)
 
-client.run("Lol no token for you")
+client.run("NTc5MzA5OTYzMjAyMDAyOTY2.XOASvA.bFth6iTb4kkfgM7I4yB0lUroYVo")
