@@ -11,7 +11,7 @@ async def on_ready():
 	print("-------")
 	guild = client.guilds()[0]
 
-async def check_for_users:
+async def check_for_users():
 	i=0
 	for member in guild.members:
 		if (discord.utils.find(lambda r: r.name == "Learners", guild.roles) not in member.roles):
@@ -23,7 +23,7 @@ async def check_for_users:
 				return
 	await client.get_channel(371388150683271178).send(":white_check_mark: All users now have the Learner role! (%d added.)" % i)
 
-async def hour_loop:
+async def hour_loop():
 	if (client.is_ready()):
 		await check_for_users()
 		await asyncio.sleep(60 * 60)
