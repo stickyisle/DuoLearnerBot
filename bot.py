@@ -2,6 +2,9 @@ import discord
 
 client = discord.Client()
 guild = None
+token = None
+with open("token.txt") as file:
+	token = file.read()
 
 @client.event
 async def on_ready():
@@ -29,4 +32,4 @@ async def hour_loop():
 		await asyncio.sleep(60 * 60)
 	else:
 		await asyncio.sleep(60 * 5)
-client.run("NTc5MzA5OTYzMjAyMDAyOTY2.XOASvA.bFth6iTb4kkfgM7I4yB0lUroYVo")
+client.run(token)
