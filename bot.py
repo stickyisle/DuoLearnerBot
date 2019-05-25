@@ -9,7 +9,7 @@ async def on_ready():
 	print(client.user.name + "#" + client.user.discriminator)
 	print(client.user.id)
 	print("-------")
-	guild = client.guilds()[0]
+	guild = client.guilds[0]
 
 async def check_for_users():
 	i=0
