@@ -1,6 +1,7 @@
 import discord
 
 client = discord.Client()
+guild = None
 
 @client.event
 async def on_ready():
@@ -8,20 +9,24 @@ async def on_ready():
 	print(client.user.name + "#" + client.user.discriminator)
 	print(client.user.id)
 	print("-------")
+	guild = client.guilds()[0]
 
-@client.event
-async def on_message(message):
-	if (message.content.startswith("||checkroles") and message.channel.id == 211715067329249280):
-		await message.channel.send("Checking for users without Learner role...")
-		i=0
-		for member in message.guild.members:
-			if (discord.utils.find(lambda r: r.name == "Learners", message.guild.roles) not in member.roles):
-				try:
-					await member.add_roles(discord.utils.find(lambda r: r.name == "Learners", message.guild.roles))
-					i += 1
-				except discord.Forbidden:
-					await message.channel.send(":x: I need the **Manage Roles** permission to work correctly.")
-					return
-		await message.channel.send(":white_check_mark: All users now have the Learner role! (%d added.)" % i)
+async def check_for_users:
+	i=0
+	for member in guild.members:
+		if (discord.utils.find(lambda r: r.name == "Learners", guild.roles) not in member.roles):
+			try:
+				await member.add_roles(discord.utils.find(lambda r: r.name == "Learners", guild.roles))
+				i += 1
+			except discord.Forbidden:
+				await client.get_channel(371388150683271178).send(":x: I need the **Manage Roles** permission to work correctly.")
+				return
+	await client.get_channel(371388150683271178).send(":white_check_mark: All users now have the Learner role! (%d added.)" % i)
 
+async def hour_loop:
+	if (client.is_ready()):
+		await check_for_users()
+		await asyncio.sleep(60 * 60)
+	else:
+		await asyncio.sleep(60 * 5)
 client.run("NTc5MzA5OTYzMjAyMDAyOTY2.XOASvA.bFth6iTb4kkfgM7I4yB0lUroYVo")
